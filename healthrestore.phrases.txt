@@ -1,0 +1,9 @@
+"Phrases"
+{	
+	"Health Restore"
+	{
+		"#format"		"{1:d}"
+		"en"			"{1} HP was restored after fall."
+		"ru"			"Восстановлено {1} ОЗ после падения."
+	}
+}
