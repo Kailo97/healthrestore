@@ -13,19 +13,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-public Plugin:myinfo =
+#include <hidenseek>
+
+#pragma newdecls required
+#pragma semicolon 1
+
+public Plugin myinfo =
 {
 	name = "Health restore",
 	author = "Maxim 'Kailo' Telezhenko",
 	description = "Restore your health after fall down",
-	version = "1.0",
+	version = "1.1",
 	url = "http://steamcommunity.com/id/kailo97/"
 };
 
 ConVar hns_healthrestore;
 ConVar hns_healthrestore_hp;
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	LoadTranslations("healthrestore.phrases");
 	
@@ -37,10 +42,9 @@ public OnPluginStart()
 	AutoExecConfig(true);
 }
 
-public void OnPlayerHurt(Event event, char[] name, bool dontBroadcast)
+public void OnPlayerHurt(Event event, const char[] name, bool dontBroadcast)
 {
-	if (hns_healthrestore.BoolValue)
-	{
+	if (hns_healthrestore.BoolValue && HNS_IsEnabled()) {
 		int client = GetClientOfUserId(event.GetInt("userid")), health = event.GetInt("health"), dmg_health = event.GetInt("dmg_health"), hpbonus = hns_healthrestore_hp.IntValue;
 		if (IsClientInGame(client) && IsPlayerAlive(client) && GetClientOfUserId(event.GetInt("attacker")) == 0 && health != 0) {
 			if (dmg_health > hpbonus) {
